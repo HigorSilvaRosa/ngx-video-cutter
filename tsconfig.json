@@ -10,6 +10,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "ngx-video-cutter": [
+        "dist/ngx-video-cutter/ngx-video-cutter",
+        "dist/ngx-video-cutter"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": [
