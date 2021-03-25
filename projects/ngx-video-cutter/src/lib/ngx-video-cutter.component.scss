@@ -1,0 +1,25 @@
+.ngx-video-cutter-container {
+    width: 100%;
+    display: block;
+}
+
+.ngx-video-cutter-block-50,
+.ngx-video-cutter-block-100 {
+    float: left;
+}
+
+.ngx-video-cutter-block-100 {
+    width: 100%;
+}
+
+.ngx-video-cutter-block-50 {
+    width: 50%;
+}
+
+.ngx-video-cutter-center {
+    text-align: center;
+}
+
+.ngx-video-cutter-trim-button {
+    text-transform: uppercase;
+}

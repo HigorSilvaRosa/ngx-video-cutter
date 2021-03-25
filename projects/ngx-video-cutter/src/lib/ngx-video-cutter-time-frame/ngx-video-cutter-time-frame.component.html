@@ -1,1 +1,7 @@
-<p>ngx-video-cutter-time-frame works!</p>
+<!-- <img [src]="url"> -->
+<div class="ngx-video-cutter-frame">
+    <ng-container *ngIf="!isBusy">
+        <img class="ngx-video-cutter-image" *ngIf="url" [src]="url">
+    </ng-container>
+    <div *ngIf="isBusy" class="ngx-video-cutter-frame-text">...</div>
+</div>

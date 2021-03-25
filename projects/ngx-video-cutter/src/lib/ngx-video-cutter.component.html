@@ -1,5 +1,30 @@
-<input *ngIf="!fileId" type="file" (change)="onFileChange($event)">
 <ng-container *ngIf="fileId">
-    <ngx-video-cutter-time-frame [fileId]="fileId"></ngx-video-cutter-time-frame>
-    <input type="range" min="1" max="100" value="50">
+
 </ng-container>
+<div class="ngx-video-cutter-container">
+    <div *ngIf="!fileId" class="ngx-video-cutter-file-selection-block ngx-video-cutter-block-100">
+        <input type="file" (change)="onFileChange($event)">
+    </div>
+    <div class="ngx-video-cutter-file-block ngx-video-cutter-block-100" *ngIf="fileId">
+        <div class="ngx-video-cutter-start-frame ngx-video-cutter-block-50">
+            <ngx-video-cutter-time-frame [fileId]="fileId" [time]="startTime"></ngx-video-cutter-time-frame>
+            <hr />
+            <input class="ngx-video-cutter-input-range ngx-video-cutter-block-100" [step]="duration / 100"
+                *ngIf="duration" type="range" min="0" [max]="duration" [(ngModel)]="startTime"
+                (change)="onStartTimeChange($event)">
+            <div>{{startTime | timeDisplay}}</div>
+        </div>
+        <div class="ngx-video-cutter-start-end ngx-video-cutter-block-50">
+            <ngx-video-cutter-time-frame [fileId]="fileId" [time]="endTime"></ngx-video-cutter-time-frame>
+            <hr />
+            <input class="ngx-video-cutter-input-range ngx-video-cutter-block-100" [step]="duration / 100"
+                *ngIf="duration" type="range" [min]="startTime" [max]="duration" [(ngModel)]="endTime"
+                (change)="onStartTimeChange($event)">
+            <div>{{endTime | timeDisplay}}</div>
+        </div>
+    </div>
+    <hr />
+    <div class="ngx-video-cutter-footer ngx-video-cutter-center ngx-video-cutter-block-100" *ngIf="fileId">
+        <button class="ngx-video-cutter-trim-button"type="button" (click)="cut()">Cortar</button>
+    </div>
+</div>

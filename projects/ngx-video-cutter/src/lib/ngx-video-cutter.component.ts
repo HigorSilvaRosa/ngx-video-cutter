@@ -10,6 +10,11 @@ export class NgxVideoCutterComponent implements OnInit {
 
   selectedFile: File;
   fileId: string;
+  duration: number;
+  startTime: number = 0;
+  endTime: number;
+
+  isBusy = false;
 
   constructor(
     private ngxVideoCutterService: NgxVideoCutterService
@@ -19,8 +24,25 @@ export class NgxVideoCutterComponent implements OnInit {
   }
 
   async onFileChange(e: any) {
-    const file: File = e.target.files?.item(0);
-    this.fileId = await this.ngxVideoCutterService.openFile(file);
+    this.selectedFile = e.target.files?.item(0);
+    this.fileId = await this.ngxVideoCutterService.openFile(this.selectedFile);
+    this.duration = await this.ngxVideoCutterService.getDuration(this.fileId);
+    this.endTime = Math.floor(this.duration / 2);
+  }
+
+  async onStartTimeChange(e: any) {
+    if (this.startTime > this.endTime) {
+      this.endTime = this.startTime;
+    }
+  }
+
+  async cut() {
+    const res = await this.ngxVideoCutterService.trim(this.fileId, this.startTime, this.endTime);
+    const a = document.createElement('a');
+    a.setAttribute("href", res);
+    a.setAttribute("download", 'video.mp4');
+    a.click();
+    window.URL.revokeObjectURL(res);
   }
 
 }
