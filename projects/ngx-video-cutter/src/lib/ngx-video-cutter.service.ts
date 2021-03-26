@@ -87,8 +87,7 @@ export class NgxVideoCutterService {
     const startStr = this.millisecondsToString(start);
     const endStr = this.millisecondsToString(end);
     const res = await this.run(fileId, '-i video.mp4 -ss ' + startStr + ' -t ' + endStr + ' cut.mp4', 'cut.mp4');
-    const blob = new Blob([res.data]);
-    return URL.createObjectURL(blob);;
+    return new Blob([res.data]);
   }
 
   async showHelp(fileId: string) {

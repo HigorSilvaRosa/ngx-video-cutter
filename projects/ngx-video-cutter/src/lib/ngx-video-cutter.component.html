@@ -9,22 +9,23 @@
         <div class="ngx-video-cutter-start-frame ngx-video-cutter-block-50">
             <ngx-video-cutter-time-frame [fileId]="fileId" [time]="startTime"></ngx-video-cutter-time-frame>
             <hr />
-            <input class="ngx-video-cutter-input-range ngx-video-cutter-block-100" [step]="duration / 100"
-                *ngIf="duration" type="range" min="0" [max]="duration" [(ngModel)]="startTime"
+            <input [disabled]="isBusy" class="ngx-video-cutter-input-range ngx-video-cutter-block-100"
+                [step]="duration / 100" *ngIf="duration" type="range" min="0" [max]="duration" [(ngModel)]="startTime"
                 (change)="onStartTimeChange($event)">
             <div>{{startTime | timeDisplay}}</div>
         </div>
         <div class="ngx-video-cutter-start-end ngx-video-cutter-block-50">
             <ngx-video-cutter-time-frame [fileId]="fileId" [time]="endTime"></ngx-video-cutter-time-frame>
             <hr />
-            <input class="ngx-video-cutter-input-range ngx-video-cutter-block-100" [step]="duration / 100"
-                *ngIf="duration" type="range" [min]="startTime" [max]="duration" [(ngModel)]="endTime"
-                (change)="onStartTimeChange($event)">
+            <input [disabled]="isBusy" class="ngx-video-cutter-input-range ngx-video-cutter-block-100"
+                [step]="duration / 100" *ngIf="duration" type="range" [min]="startTime" [max]="duration"
+                [(ngModel)]="endTime" (change)="onStartTimeChange($event)">
             <div>{{endTime | timeDisplay}}</div>
         </div>
     </div>
     <hr />
     <div class="ngx-video-cutter-footer ngx-video-cutter-center ngx-video-cutter-block-100" *ngIf="fileId">
-        <button class="ngx-video-cutter-trim-button"type="button" (click)="cut()">Cortar</button>
+        <button *ngIf="!isBusy" class="ngx-video-cutter-cut-button" type="button" (click)="cut()">Cut</button>
+        <button *ngIf="isBusy" class="ngx-video-cutter-loading-button" type="button" disabled>Loading</button>
     </div>
 </div>

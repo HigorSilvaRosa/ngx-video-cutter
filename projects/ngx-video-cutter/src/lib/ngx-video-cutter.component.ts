@@ -1,5 +1,5 @@
 import { NgxVideoCutterService } from './ngx-video-cutter.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'ngx-video-cutter',
@@ -15,6 +15,8 @@ export class NgxVideoCutterComponent implements OnInit {
   endTime: number;
 
   isBusy = false;
+
+  @Output() onCut = new EventEmitter<Blob>();
 
   constructor(
     private ngxVideoCutterService: NgxVideoCutterService
@@ -37,12 +39,10 @@ export class NgxVideoCutterComponent implements OnInit {
   }
 
   async cut() {
-    const res = await this.ngxVideoCutterService.trim(this.fileId, this.startTime, this.endTime);
-    const a = document.createElement('a');
-    a.setAttribute("href", res);
-    a.setAttribute("download", 'video.mp4');
-    a.click();
-    window.URL.revokeObjectURL(res);
+    this.isBusy = true;
+    const blob = await this.ngxVideoCutterService.trim(this.fileId, this.startTime, this.endTime);
+    this.onCut.emit(blob);
+    this.isBusy = false;
   }
 
 }
